@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "a2c9ab73-e640-4a67-97e3-f8e69b620d4c",
+    "name": "All Car APIs",
+    "description": "This collection has all the APIs for **Car CRUD operations** and mostly each API response is JSON.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Read All Cars",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "d44e5cf8-5fbf-4fe0-b88d-e1f850d35bfe",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "fe4da3b2-f24c-42c8-8a32-fce4c8ab1808",
+            "exec": [
+              "postman.setNextRequest(\"Read All Cars\");\r",
+              "\r",
+              "if(!pm.collectionVariables.has(\"COUNTER\")) {\r",
+              "    //Create a new one if does not exist\r",
+              "    pm.collectionVariables.set(\"COUNTER\",1);\r",
+              "} else {\r",
+              "    //Read the value if exist\r",
+              "    var counter = pm.collectionVariables.get(\"COUNTER\"); \r",
+              "    counter++;\r",
+              "    //Update the latest value to COUNTER\r",
+              "    pm.collectionVariables.set(\"COUNTER\",counter);\r",
+              "    if(counter == 10) {\r",
+              "        console.log(\"Already 10 hits done!!\");\r",
+              "        postman.setNextRequest(\"OnlySportsCars\"); //Default Behaviour\r",
+              "        pm.collectionVariables.set(\"COUNTER\",0);\r",
+              "    } \r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "432f57a1-46b1-4e5d-9fd0-6e91111da937",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "{{CAR_DATA_TYPE}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{CAR_URL}}",
+        "description": "This request will fetch all the car list in JSON format"
+      },
+      "response": []
+    },
+    {
+      "name": "OnlySportsCars",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "f06aa032-5b82-4864-9ec5-cc57b6bbabaf",
+            "exec": [
+              "postman.setNextRequest(\"OnlySportsCars\");\r",
+              "\r",
+              "if(!pm.collectionVariables.has(\"COUNTER\")) {\r",
+              "    //Create a new one if does not exist\r",
+              "    pm.collectionVariables.set(\"COUNTER\",1);\r",
+              "} else {\r",
+              "    //Read the value if exist\r",
+              "    var counter = pm.collectionVariables.get(\"COUNTER\"); \r",
+              "    counter++;\r",
+              "    //Update the latest value to COUNTER\r",
+              "    pm.collectionVariables.set(\"COUNTER\",counter);\r",
+              "    if(counter == 4) {\r",
+              "        console.log(\"Already 4 hits done!!\");\r",
+              "        postman.setNextRequest(\"AddCar\"); //Default Behaviour\r",
+              "        pm.collectionVariables.set(\"COUNTER\",0);\r",
+              "    } \r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "2008ecbd-ceed-4140-95c4-2489e8deedb9",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{CAR_URL}}/{{CAR_SPORTS_TYPE}}",
+        "description": "This API will fetch only cars of type sports"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Car",
+      "_postman_id": "ef906ab1-a3af-46c9-a304-d69274748001",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "{{CAR_DATA_TYPE}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"model\":\"Palisade\",\"make\":\"Hyundai\",\"price\":9000,\"type\":\"suv\"} ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{CAR_URL}}/car/105",
+        "description": "This API call will add a new car to server and request payload should be like below.\r\n{\"model\":\"X6\",\"make\":\"BMW\",\"price\":120000,\"type\":\"luxury\"}"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Car Price Only",
+      "_postman_id": "cc181f5e-e1f7-4dbb-8ce4-bb5263a10aef",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{CAR_URL}}/car/106/price/500.00",
+        "description": "This API call will add a new car to server and request payload should be like below.\r\n{\"model\":\"X6\",\"make\":\"BMW\",\"price\":120000,\"type\":\"luxury\"}"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Car",
+      "_postman_id": "c4c5f1dc-2ffd-48da-89c2-c43cac2d908e",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{CAR_URL}}/car/115",
+        "description": "This API call will add a new car to server and request payload should be like below.\r\n{\"model\":\"X6\",\"make\":\"BMW\",\"price\":120000,\"type\":\"luxury\"}"
+      },
+      "response": []
+    },
+    {
+      "name": "Add New Car",
+      "_postman_id": "eaf4abbf-b1a1-4136-97c4-62e4797633f4",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "{{CAR_DATA_TYPE}}",
+            "type": "text"
+          },
+          {
+            "key": "Sender-Device",
+            "value": "{{SENDER_DEVICE}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": " {\"model\":\"X6\",\"make\":\"{{CAR_MAKE_BMW}}\",\"price\":120000,\"type\":\"{{CAR_SPORTS_TYPE}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{CAR_URL}}",
+        "description": "This API call will add a new car to server and request payload should be like below.\r\n{\"model\":\"X6\",\"make\":\"BMW\",\"price\":120000,\"type\":\"luxury\"}"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "5c5d0824-cabd-4fca-9280-e4d9083439d1",
+        "type": "text/javascript",
+        "exec": [
+          "console.log(\"About to run first request in sequence in this collection!!\");"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "4a1e34e9-b1cb-45e3-ae65-4d8518c90d7c",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "baeab4ec-2389-482e-9792-20392e5de33e",
+      "key": "COUNTER",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
